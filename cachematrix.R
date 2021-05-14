@@ -1,29 +1,29 @@
 ## Creates a matrix that allows an object to cache its inverse
 
-makeCacheMatrix <- function(x = matrix()) {
-  inv <- NULL   ## sets inverse as NULL
-  set <- function(matrix) {
-    x <<- matrix
-    inv <<- NULL
+makeCacheMatrix <- function(x = matrix()) {                  ## defines the function as a matrix
+    inv <- NULL                                              ## sets inv as NULL and will set inverse matrix value
+    set <- function(matrix) {                                ## assigns a new set value
+      x <<- matrix                                           ## value of matrix (x=matrix()) in main function
+      inv <<- NULL                                           ## resets inv to null if a new matrix is found
   }
-  get <- function() x      ##gets matrix
-  setInverse <- function(inverse) inv <<- inverse
-  getInverse <- function() inv               ##gets inverse of matrix
-  list(set = set,
-       get = get,
-       setInverse = setInverse,
-       getInverse = getInverse)
+  get <- function() x                                        ## gets value of matrix function
+    setInverse <- function(inverse) inv <<- inverse          ## sets inv value in main argument
+    getInverse <- function() inv                             ## gets inverse of matrix
+    list(set = set,                                          ## creates list of set, get and inverse functions
+        get = get,
+        setInverse = setInverse,
+        getInverse = getInverse)
 }
 
 
-## Computes inverse of the matrix returnted by the makeCacheMatrix
-## function
+## Computes inverse of the matrix returned by the makeCacheMatrix
+## function. If inverse already calculated, will return inverse from the cache.
 
-cacheSolve <- function(x, ...) {       ##gets cache date
+cacheSolve <- function(x, ...) {              ##gets cache date
   inv <- x$getInverse()
-  if (!is.null(inv)) {                 ##checks whether inverse is null
+  if (!is.null(inv)) {                        ##checks whether inverse is null
     message("getting cached data")
-    return(inv)                       ##provides inverse value
+    return(inv)                               ##provides inverse value
   }
   mat <- x$get()
   inv <- solve(mat, ...)
